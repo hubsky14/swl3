@@ -1,0 +1,30 @@
+class Kalkulator:
+	def __on__(self):
+		self.wlacz()
+
+	def __off__(self):
+		self.wylacz()
+
+	def wlacz(self):
+		print('wlaczono')
+	
+	def wylacz(self):
+		print('wylaczono')
+
+	@staticmethod
+	def dodaj(a,b):
+		return a+b
+
+	@staticmethod
+	def odejmij(a,b):
+		return a-b
+
+	@staticmethod
+	def pomnoz(a,b):
+		return a*b
+
+	@staticmethod
+	def podziel(a,b):
+		return a/b
+	
+	
