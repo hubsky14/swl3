@@ -1,15 +1,12 @@
 import socket
-
 class Machine:
     filename = "lab7.txt"
-
     def machine_on():
         with open(Machine.filename, 'w') as f:
             f.write("wlaczono maszyne")
     def machine_off():
         with open(Machine.filename, 'w') as f:
             f.write("wylaczono maszyne")
-
 HTML_RESPONSE = """
 <html>
 <head>
