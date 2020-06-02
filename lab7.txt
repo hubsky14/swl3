@@ -1,0 +1,50 @@
+import socket
+
+class Machine:
+    filename = "lab7.txt"
+
+    def machine_on():
+        with open(Machine.filename, 'w') as f:
+            f.write("wlaczono maszyne")
+    def machine_off():
+        with open(Machine.filename, 'w') as f:
+            f.write("wylaczono maszyne")
+
+HTML_RESPONSE = """
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+<form>
+<center>
+<button name="BUTTON_ON" value="VALUE_ON" type="submit">WLACZ</button>
+<button name="BUTTON_OFF" value="VALUE_OFF" type="submit">WYLACZ</button>
+</center>
+</form>
+	</body>
+</html>
+"""
+PORT= 9000
+def run():
+  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  sock.bind(('', PORT))
+  sock.listen(1)
+  server_on=True
+  while server_on:
+      client, address = sock.accept()
+      print("polaczono")
+      request = client.recv(1024)
+      on_clicked=(request[:24] == b'GET /?BUTTON_ON=VALUE_ON')
+      off_clicked=(request[:26] == b'GET /?BUTTON_OFF=VALUE_OFF')
+      if on_clicked:
+          Machine.machine_on()
+      if off_clicked:
+          Machine.machine_off()
+      client.send(bytes('HTTP/1.1 200 OK\n', "utf-8"))
+      client.send(bytes('Content type: text/html\n', "utf-8"))
+      client.sendall(bytes(HTML_RESPONSE, "utf-8"))
+      client.close()
+  sock.close()
+
+run()
